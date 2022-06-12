@@ -23,10 +23,7 @@ namespace OpenTelemetryExample.Core.Kafka
             {
                 BootstrapServers = kafkaOptions.Value.Servers,
                 SaslMechanism = SaslMechanism.Plain,
-                SecurityProtocol = SecurityProtocol.SaslPlaintext,
-                SaslUsername = kafkaOptions.Value.Credentials.Username,
-                SaslPassword = kafkaOptions.Value.Credentials.Password,
-                EnableDeliveryReports = false,
+                SecurityProtocol = SecurityProtocol.Plaintext,
                 SocketTimeoutMs = kafkaOptions.Value.Producer.SocketTimeoutMs,
                 MessageTimeoutMs = kafkaOptions.Value.Producer.MessageTimeoutMs
             };

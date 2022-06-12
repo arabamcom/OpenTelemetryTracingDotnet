@@ -39,12 +39,12 @@ builder.Services.AddOpenTelemetryTracing(config => config
     .AddConsoleExporter()
     .AddJaegerExporter(c =>
     {
-        c.AgentHost = "localhost";
+        c.AgentHost = "jaeger";
         c.AgentPort = 6831;
     })
     .AddZipkinExporter(c =>
     {
-        c.Endpoint = new Uri("http://localhost:9412/api/v2/spans");
+        c.Endpoint = new Uri("http://zipkin:9411/api/v2/spans");
     })
     .AddAspNetCoreInstrumentation(options =>
     {
@@ -58,25 +58,25 @@ builder.Services.AddOpenTelemetryTracing(config => config
     })));
 
 
-builder.Services
-    .AddOpenTelemetryMetrics(builder => builder
-        .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("OpenTelemetryExample.Api1"))
-        .AddMeter()
-        .AddRuntimeMetrics()
-        .AddAspNetCoreInstrumentation()
-        .AddConsoleExporter());
+//builder.Services
+//    .AddOpenTelemetryMetrics(builder => builder
+//        .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("OpenTelemetryExample.Api1"))
+//        .AddMeter()
+//        .AddRuntimeMetrics()
+//        .AddAspNetCoreInstrumentation()
+//        .AddConsoleExporter());
 
-builder.Host
-    .ConfigureLogging(logging => logging
-        .ClearProviders()
-        .AddOpenTelemetry(options =>
-        {
-            // Export the body of the message
-            options.IncludeFormattedMessage = true;
-            // Configure the resource attribute `service.name` to MyServiceName
-            options.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("OpenTelemetryExample.Api1"));
-            options.AddConsoleExporter();
-        }));
+//builder.Host
+//    .ConfigureLogging(logging => logging
+//        .ClearProviders()
+//        .AddOpenTelemetry(options =>
+//        {
+//            // Export the body of the message
+//            options.IncludeFormattedMessage = true;
+//            // Configure the resource attribute `service.name` to MyServiceName
+//            options.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("OpenTelemetryExample.Api1"));
+//            options.AddConsoleExporter();
+//        }));
 
 builder.Services.AddSingleton(TracerProvider.Default.GetTracer("OpenTelemetryExample.Api1"));
 
@@ -95,9 +95,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("CorsPolicy");
-
 app.UseHttpsRedirection();
+
+app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
 

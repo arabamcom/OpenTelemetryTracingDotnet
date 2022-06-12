@@ -35,11 +35,9 @@ namespace OpenTelemetryExample.Core.Services
                 await _productRepository.AddAsync(new Product()
                 {
                     Name = productDto.Name,
-                    Barcode = productDto.Barcode,
+                    Sku = productDto.Sku,
                     Description = productDto.Description,
-                    Rate = productDto.Rate,
-                    AddedOn = DateTime.Now,
-                    ModifiedOn = null
+                    Price = productDto.Price,
                 });
             }
             catch (Exception ex)

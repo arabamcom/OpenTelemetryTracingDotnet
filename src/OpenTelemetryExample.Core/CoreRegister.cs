@@ -13,38 +13,18 @@ namespace OpenTelemetryExample.Core
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            #region NO INTERCEPTOR
-            container.Register(Component.For<TraceInterceptor>().LifeStyle.Transient);
-
-            container.Register(Component.For<IKafkaProducerService>()
-                .ImplementedBy<KafkaProducerService>()
-                .LifestyleSingleton()
-                .Interceptors<TraceInterceptor>());
-
-            container.Register(Component.For<IProductService>()
-                .ImplementedBy<ProductService>()
-                .LifestyleSingleton()
-                .Interceptors<TraceInterceptor>());
-
-            container.Register(Component.For<IProductRepository>()
-                .ImplementedBy<ProductRepository>()
-                .LifestyleTransient());
-
-            container.Register(Component.For<IApi1Client>()
-                .ImplementedBy<Api1Client>()
-                .LifestyleSingleton());
-            #endregion
-
-            #region NO INTERCEPTOR
+            #region WITH INTERCEPTOR
             //container.Register(Component.For<TraceInterceptor>().LifeStyle.Transient);
 
             //container.Register(Component.For<IKafkaProducerService>()
             //    .ImplementedBy<KafkaProducerService>()
-            //    .LifestyleSingleton());
+            //    .LifestyleSingleton()
+            //    .Interceptors<TraceInterceptor>());
 
             //container.Register(Component.For<IProductService>()
             //    .ImplementedBy<ProductService>()
-            //    .LifestyleSingleton());
+            //    .LifestyleSingleton()
+            //    .Interceptors<TraceInterceptor>());
 
             //container.Register(Component.For<IProductRepository>()
             //    .ImplementedBy<ProductRepository>()
@@ -53,6 +33,25 @@ namespace OpenTelemetryExample.Core
             //container.Register(Component.For<IApi1Client>()
             //    .ImplementedBy<Api1Client>()
             //    .LifestyleSingleton());
+            #endregion
+
+            #region NO INTERCEPTOR
+
+            container.Register(Component.For<IKafkaProducerService>()
+                .ImplementedBy<KafkaProducerService>()
+                .LifestyleSingleton());
+
+            container.Register(Component.For<IProductService>()
+                .ImplementedBy<ProductService>()
+                .LifestyleSingleton());
+
+            container.Register(Component.For<IProductRepository>()
+                .ImplementedBy<ProductRepository>()
+                .LifestyleTransient());
+
+            container.Register(Component.For<IApi1Client>()
+                .ImplementedBy<Api1Client>()
+                .LifestyleSingleton());
             #endregion
         }
     }

@@ -16,7 +16,7 @@ namespace OpenTelemetryExample.Core.Clients
         {
             var httpRequestMessage = new HttpRequestMessage(
                 HttpMethod.Post,
-                "https://localhost:7185/Product")
+                "http://api1/Product")
             {
                 Content = JsonContent.Create(productDto)
             };
