@@ -44,11 +44,7 @@ builder.Services.AddOpenTelemetryTracing(config => config
         options.Filter = (req) => !req.Request.Path.ToUriComponent().Contains("index.html", StringComparison.OrdinalIgnoreCase) &&
             !req.Request.Path.ToUriComponent().Contains("swagger", StringComparison.OrdinalIgnoreCase);
     })
-    .AddHttpClientInstrumentation()
-    .AddSqlClientInstrumentation((options => {
-        options.SetDbStatementForText = true;
-        options.RecordException = true;
-    })));
+    .AddHttpClientInstrumentation());
 
 //builder.Services
 //    .AddOpenTelemetryMetrics(builder => builder

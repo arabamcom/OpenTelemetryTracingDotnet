@@ -1,4 +1,5 @@
 using Castle.Windsor.MsDependencyInjection;
+using Npgsql;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -52,10 +53,7 @@ builder.Services.AddOpenTelemetryTracing(config => config
             !req.Request.Path.ToUriComponent().Contains("swagger", StringComparison.OrdinalIgnoreCase);
     })
     .AddHttpClientInstrumentation()
-    .AddSqlClientInstrumentation((options => {
-        options.SetDbStatementForText = true;
-        options.RecordException = true;
-    })));
+    .AddNpgsql());
 
 
 //builder.Services
